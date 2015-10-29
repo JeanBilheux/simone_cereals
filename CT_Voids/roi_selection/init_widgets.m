@@ -4,6 +4,8 @@ handles = guidata(hObject);
 
 ct_images = handles.ct_images;
 nbr_images = numel(ct_images);
+handles.nbr_images = nbr_images;
+guidata(hObject, handles);
 
 set(handles.slider_images, 'min', 1);
 set(handles.slider_images, 'max', nbr_images);

@@ -22,7 +22,7 @@ function varargout = roi_selection(varargin)
 
 % Edit the above text to modify the response to help roi_selection
 
-% Last Modified by GUIDE v2.5 29-Oct-2015 13:30:05
+% Last Modified by GUIDE v2.5 29-Oct-2015 15:08:39
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,9 +56,14 @@ function roi_selection_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.path = '/Users/j35/Desktop/simone/reconstructed/';
 handles.ct_images = {};
+handles.nbr_images = 1;
+handles.images_rectangle = {};
 
 handles.images_width = 1;
 handles.images_height = 1;
+
+handles.first_slice = 1;
+handles.last_slice = 1;
 
 % Update handles structure
 guidata(hObject, handles);
@@ -83,6 +88,7 @@ function slider_x1_Callback(hObject, eventdata, handles)
 % hObject    handle to slider_x1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
 
 % --- Executes during object creation, after setting all properties.
@@ -124,6 +130,7 @@ function slider_y1_Callback(hObject, eventdata, handles)
 % hObject    handle to slider_y1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
 
 
@@ -249,6 +256,7 @@ function edit_height_Callback(hObject, eventdata, handles)
 % hObject    handle to edit_height (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
 
 
@@ -271,6 +279,7 @@ function edit_width_Callback(hObject, eventdata, handles)
 % hObject    handle to edit_width (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
 
 
@@ -296,6 +305,7 @@ function edit_height_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
 
 
@@ -307,4 +317,25 @@ function edit_width_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
+hObject = changed_selection(hObject);
 display_image_and_selection(hObject);
+
+% --- Executes on key press with focus on pushbutton_first_slice and none of its controls.
+function pushbutton_first_slice_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to pushbutton_first_slice (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+validate_as_first_slice(hObject);
+
+% --- Executes on key press with focus on pushbutton_last_slice and none of its controls.
+function pushbutton_last_slice_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to pushbutton_last_slice (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+validate_as_last_slice(hObject);
