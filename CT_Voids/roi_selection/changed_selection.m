@@ -30,12 +30,25 @@ set(handles.text_too_height, 'visible', height_error);
 
 nbr_images = handles.nbr_images;
 
+% x, y are slice dependent
 images_rectangle = handles.images_rectangle;
 for i=slice_selected:nbr_images
     slice_rectangle = [x1, y1, width, height];
     images_rectangle{i} = slice_rectangle;
 end
+
+% width and height are global
+for i=1:nbr_images
+   slice_rectangle = images_rectangle{i};
+   images_rectangle{i} = [slice_rectangle{1}, ...
+       slice_rectangle{2}, ...
+       width, height];
+end
+
 handles.images_rectangle = images_rectangle;
+
+
+
 
 guidata(hObject, handles);
 
