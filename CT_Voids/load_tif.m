@@ -9,7 +9,7 @@ end
 nbr_file = size(ct_files, 2);
 ct_images = {};
 for i = 1:nbr_file
-    full_file_name = fullfile(path, ct_files{1});
+    full_file_name = fullfile(path, ct_files{i});
     image = imread(full_file_name);
     ct_images{i} = image ; %#ok<AGROW>
 end

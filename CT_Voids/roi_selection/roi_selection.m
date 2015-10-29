@@ -22,7 +22,7 @@ function varargout = roi_selection(varargin)
 
 % Edit the above text to modify the response to help roi_selection
 
-% Last Modified by GUIDE v2.5 28-Oct-2015 19:18:58
+% Last Modified by GUIDE v2.5 29-Oct-2015 13:30:05
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,8 +54,11 @@ function roi_selection_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for roi_selection
 handles.output = hObject;
-handles.path = '/Users/j35/Desktop/simone';
+handles.path = '/Users/j35/Desktop/simone/reconstructed/';
 handles.ct_images = {};
+
+handles.images_width = 1;
+handles.images_height = 1;
 
 % Update handles structure
 guidata(hObject, handles);
@@ -76,18 +79,15 @@ varargout{1} = handles.output;
 
 
 % --- Executes on slider movement.
-function slider1_Callback(hObject, eventdata, handles)
-% hObject    handle to slider1 (see GCBO)
+function slider_x1_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_x1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
+display_image_and_selection(hObject);
 
 % --- Executes during object creation, after setting all properties.
-function slider1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider1 (see GCBO)
+function slider_x1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_x1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -98,8 +98,8 @@ end
 
 
 % --- Executes on slider movement.
-function slider2_Callback(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
+function slider_x2_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_x2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -108,8 +108,8 @@ function slider2_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function slider2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
+function slider_x2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_x2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -120,18 +120,16 @@ end
 
 
 % --- Executes on slider movement.
-function slider3_Callback(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
+function slider_y1_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_y1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+display_image_and_selection(hObject);
 
 
 % --- Executes during object creation, after setting all properties.
-function slider3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
+function slider_y1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_y1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -142,8 +140,8 @@ end
 
 
 % --- Executes on slider movement.
-function slider4_Callback(hObject, eventdata, handles)
-% hObject    handle to slider4 (see GCBO)
+function slider_y2_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_y2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -152,8 +150,8 @@ function slider4_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function slider4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider4 (see GCBO)
+function slider_y2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_y2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -207,20 +205,22 @@ function menu_load_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 menu_load(hObject)
 init_widgets(hObject);
+display_selected_image(hObject);
+init_selection(hObject);
 
 % --- Executes on slider movement.
-function slider5_Callback(hObject, eventdata, handles)
-% hObject    handle to slider5 (see GCBO)
+function slider_images_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_images (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+value = get(hObject, 'Value');
+set(handles.slice_index, 'String', int16(value));
+display_image_and_selection(hObject);
 
 
 % --- Executes during object creation, after setting all properties.
-function slider5_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider5 (see GCBO)
+function slider_images_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_images (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -228,3 +228,83 @@ function slider5_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
+
+
+% --- Executes on button press in pushbutton_first_slice.
+function pushbutton_first_slice_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_first_slice (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton_last_slice.
+function pushbutton_last_slice_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton_last_slice (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit_height_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_height (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+display_image_and_selection(hObject);
+
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_height_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_height (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_width_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_width (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+display_image_and_selection(hObject);
+
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_width_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_width (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on key press with focus on edit_height and none of its controls.
+function edit_height_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to edit_height (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+display_image_and_selection(hObject);
+
+
+% --- Executes on key press with focus on edit_width and none of its controls.
+function edit_width_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to edit_width (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+display_image_and_selection(hObject);
