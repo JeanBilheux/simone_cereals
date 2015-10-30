@@ -40,15 +40,12 @@ end
 % width and height are global
 for i=1:nbr_images
    slice_rectangle = images_rectangle{i};
-   images_rectangle{i} = [slice_rectangle{1}, ...
-       slice_rectangle{2}, ...
+   images_rectangle{i} = [slice_rectangle(1), ...
+       slice_rectangle(2), ...
        width, height];
 end
 
 handles.images_rectangle = images_rectangle;
-
-
-
 
 guidata(hObject, handles);
 
