@@ -22,7 +22,7 @@ function varargout = roi_selection(varargin)
 
 % Edit the above text to modify the response to help roi_selection
 
-% Last Modified by GUIDE v2.5 30-Oct-2015 09:42:18
+% Last Modified by GUIDE v2.5 30-Oct-2015 10:16:16
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,6 +81,16 @@ function varargout = roi_selection_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+
+% --------------------------------------------------------------------
+function menu_load_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+menu_load(hObject)
+init_widgets(hObject);
+display_selected_image(hObject);
+init_selection(hObject);
 
 
 % --- Executes on slider movement.
@@ -173,21 +183,21 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+export_volume_to_mat(hObject);
 
 
-
-function edit1_Callback(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
+function mat_file_name_Callback(hObject, eventdata, handles)
+% hObject    handle to mat_file_name (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit1 as text
-%        str2double(get(hObject,'String')) returns contents of edit1 as a double
+% Hints: get(hObject,'String') returns contents of mat_file_name as text
+%        str2double(get(hObject,'String')) returns contents of mat_file_name as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
+function mat_file_name_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to mat_file_name (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -205,15 +215,6 @@ function Untitled_1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function menu_load_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_load (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-menu_load(hObject)
-init_widgets(hObject);
-display_selected_image(hObject);
-init_selection(hObject);
 
 % --- Executes on slider movement.
 function slider_images_Callback(hObject, eventdata, handles)
