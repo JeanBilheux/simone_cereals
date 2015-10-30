@@ -22,7 +22,7 @@ function varargout = roi_selection(varargin)
 
 % Edit the above text to modify the response to help roi_selection
 
-% Last Modified by GUIDE v2.5 29-Oct-2015 15:08:39
+% Last Modified by GUIDE v2.5 30-Oct-2015 09:42:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -242,15 +242,14 @@ function pushbutton_first_slice_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton_first_slice (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+set_slice_range(hObject, 'first');
 
 % --- Executes on button press in pushbutton_last_slice.
 function pushbutton_last_slice_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton_last_slice (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
+set_slice_range(hObject, 'last');
 
 function edit_height_Callback(hObject, eventdata, handles)
 % hObject    handle to edit_height (see GCBO)
@@ -339,3 +338,29 @@ function pushbutton_last_slice_KeyPressFcn(hObject, eventdata, handles)
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
 validate_as_last_slice(hObject);
+
+
+% --- Executes on button press in lock_height.
+function lock_height_Callback(hObject, eventdata, handles)
+% hObject    handle to lock_height (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+state_lock_height = get(hObject, 'Value');
+if state_lock_height == 1
+    set(handles.edit_height, 'enable', 'off');
+else
+    set(handles.edit_height, 'enable', 'on');
+end
+
+
+% --- Executes on button press in lock_width.
+function lock_width_Callback(hObject, eventdata, handles)
+% hObject    handle to lock_width (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+state_lock_width = get(hObject, 'Value');
+if state_lock_width == 1
+    set(handles.edit_width, 'enable', 'off');
+else
+    set(handles.edit_width, 'enable', 'on');
+end

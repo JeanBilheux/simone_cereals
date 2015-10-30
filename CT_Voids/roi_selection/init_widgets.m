@@ -4,6 +4,9 @@ handles = guidata(hObject);
 
 ct_images = handles.ct_images;
 nbr_images = numel(ct_images);
+
+handles.last_slice = nbr_images;
+
 handles.nbr_images = nbr_images;
 guidata(hObject, handles);
 
